@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450">
+  <defs>
+    <linearGradient id="g4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff6384;stop-opacity:0.15"/>
+      <stop offset="100%" style="stop-color:#6c63ff;stop-opacity:0.15"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="#0f0f18"/>
+  <rect x="50" y="40" width="700" height="370" rx="12" fill="url(#g4)"/>
+  <!-- Logo mockup -->
+  <circle cx="400" cy="170" r="60" fill="none" stroke="#ff6384" stroke-width="3" opacity="0.6"/>
+  <circle cx="400" cy="170" r="40" fill="none" stroke="#6c63ff" stroke-width="2" opacity="0.5"/>
+  <polygon points="400,140 420,185 380,185" fill="#ff6384" opacity="0.4"/>
+  <!-- Brand elements -->
+  <rect x="300" y="260" width="200" height="14" rx="4" fill="#ff6384" opacity="0.4"/>
+  <rect x="320" y="290" width="160" height="8" rx="3" fill="#2a2a3e"/>
+  <!-- Color swatches -->
+  <circle cx="310" cy="340" r="18" fill="#6c63ff" opacity="0.6"/>
+  <circle cx="360" cy="340" r="18" fill="#ff6384" opacity="0.6"/>
+  <circle cx="410" cy="340" r="18" fill="#00d4aa" opacity="0.6"/>
+  <circle cx="460" cy="340" r="18" fill="#ffa826" opacity="0.6"/>
+  <circle cx="510" cy="340" r="18" fill="#1a1a2e" stroke="#2a2a3e" stroke-width="1"/>
+  <text x="400" y="430" text-anchor="middle" fill="#5a5a6a" font-family="sans-serif" font-size="12">Visual Identity — Komunitas Tech</text>
+</svg>
