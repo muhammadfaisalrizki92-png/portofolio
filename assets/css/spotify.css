@@ -1,0 +1,341 @@
+/* ═══════════════════════════════════════════════ */
+/* SPOTIFY.CSS — Floating Spotify Player Widget   */
+/* ═══════════════════════════════════════════════ */
+
+/* ─── Floating Container ─── */
+.spotify-float {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9998;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+    opacity: 0;
+}
+
+.spotify-float.visible {
+    opacity: 1;
+}
+
+/* ─── Expanded Player Panel ─── */
+.spotify-panel {
+    pointer-events: auto;
+    width: 340px;
+    background: rgba(18, 18, 30, 0.92);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.5),
+        0 0 40px rgba(108, 99, 255, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    transform: translateY(20px) scale(0.95);
+    opacity: 0;
+    max-height: 0;
+    transition:
+        transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+        opacity 0.35s ease,
+        max-height 0.4s ease;
+}
+
+.spotify-float.open .spotify-panel {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    max-height: 500px;
+}
+
+/* Panel Header */
+.spotify-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.spotify-panel-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-primary, 'Inter', sans-serif);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #f0f0f5;
+    letter-spacing: 0.3px;
+}
+
+.spotify-panel-title svg {
+    flex-shrink: 0;
+}
+
+.spotify-panel-badge {
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: rgba(30, 215, 96, 0.9);
+    background: rgba(30, 215, 96, 0.1);
+    padding: 2px 8px;
+    border-radius: 9999px;
+    border: 1px solid rgba(30, 215, 96, 0.2);
+}
+
+.spotify-panel-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #8a8a9a;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.spotify-panel-close:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #f0f0f5;
+    transform: rotate(90deg);
+}
+
+/* Spotify iFrame Container */
+.spotify-embed-wrap {
+    padding: 12px;
+}
+
+.spotify-embed-wrap iframe {
+    border-radius: 12px;
+    width: 100%;
+    display: block;
+}
+
+/* ─── Toggle Button (FAB) ─── */
+.spotify-fab {
+    pointer-events: auto;
+    position: relative;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1DB954 0%, #1aa34a 100%);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow:
+        0 4px 20px rgba(30, 185, 84, 0.35),
+        0 8px 32px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow: hidden;
+}
+
+.spotify-fab::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 50%;
+    background: conic-gradient(
+        from 0deg,
+        rgba(30, 215, 96, 0.6),
+        rgba(108, 99, 255, 0.3),
+        rgba(30, 215, 96, 0.6)
+    );
+    z-index: -1;
+    animation: fabRingSpin 4s linear infinite;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.spotify-fab:hover::before {
+    opacity: 1;
+}
+
+@keyframes fabRingSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.spotify-fab:hover {
+    transform: scale(1.1);
+    box-shadow:
+        0 6px 28px rgba(30, 185, 84, 0.45),
+        0 12px 40px rgba(0, 0, 0, 0.35);
+}
+
+.spotify-fab:active {
+    transform: scale(0.95);
+}
+
+/* FAB icon states */
+.spotify-fab-icon,
+.spotify-fab-close {
+    position: absolute;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.spotify-fab-icon {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+}
+
+.spotify-fab-close {
+    opacity: 0;
+    transform: scale(0.5) rotate(-90deg);
+}
+
+.spotify-float.open .spotify-fab-icon {
+    opacity: 0;
+    transform: scale(0.5) rotate(90deg);
+}
+
+.spotify-float.open .spotify-fab-close {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+}
+
+.spotify-float.open .spotify-fab {
+    background: linear-gradient(135deg, rgba(18, 18, 30, 0.95) 0%, rgba(30, 30, 50, 0.95) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow:
+        0 4px 20px rgba(0, 0, 0, 0.4),
+        0 0 20px rgba(108, 99, 255, 0.1);
+}
+
+/* ─── Pulse Animation on FAB ─── */
+.spotify-fab-pulse {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid rgba(30, 215, 96, 0.5);
+    animation: spotifyPulse 2s ease-out infinite;
+    pointer-events: none;
+}
+
+.spotify-float.open .spotify-fab-pulse {
+    animation: none;
+    opacity: 0;
+}
+
+@keyframes spotifyPulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+    100% {
+        transform: scale(1.8);
+        opacity: 0;
+    }
+}
+
+/* ─── Equalizer Bars (playing indicator on FAB) ─── */
+.spotify-eq {
+    position: absolute;
+    bottom: 6px;
+    right: 6px;
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 10px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.spotify-float.open .spotify-eq {
+    opacity: 1;
+}
+
+.spotify-eq-bar {
+    width: 2px;
+    background: rgba(30, 215, 96, 0.8);
+    border-radius: 1px;
+    animation: eqBounce 0.8s ease-in-out infinite alternate;
+}
+
+.spotify-eq-bar:nth-child(1) { height: 4px; animation-delay: 0s; }
+.spotify-eq-bar:nth-child(2) { height: 7px; animation-delay: 0.15s; }
+.spotify-eq-bar:nth-child(3) { height: 5px; animation-delay: 0.3s; }
+
+@keyframes eqBounce {
+    0% { transform: scaleY(0.4); }
+    100% { transform: scaleY(1); }
+}
+
+/* ─── Tooltip ─── */
+.spotify-tooltip {
+    position: absolute;
+    right: calc(100% + 12px);
+    top: 50%;
+    transform: translateY(-50%) translateX(8px);
+    white-space: nowrap;
+    font-family: var(--font-primary, 'Inter', sans-serif);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #f0f0f5;
+    background: rgba(18, 18, 30, 0.95);
+    backdrop-filter: blur(12px);
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.25s ease;
+}
+
+.spotify-tooltip::after {
+    content: '';
+    position: absolute;
+    right: -5px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-left: 5px solid rgba(18, 18, 30, 0.95);
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+}
+
+.spotify-fab:hover + .spotify-tooltip,
+.spotify-fab:hover ~ .spotify-tooltip {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+}
+
+.spotify-float.open .spotify-tooltip {
+    display: none;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+    .spotify-float {
+        bottom: 16px;
+        right: 16px;
+    }
+
+    .spotify-panel {
+        width: calc(100vw - 32px);
+        max-width: 340px;
+    }
+
+    .spotify-fab {
+        width: 46px;
+        height: 46px;
+    }
+}
+
+@media (max-width: 480px) {
+    .spotify-panel {
+        width: calc(100vw - 32px);
+        max-width: 300px;
+    }
+}
